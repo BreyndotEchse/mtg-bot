@@ -1,7 +1,28 @@
 {
+    "name": "BreyndotEchse/mtg-bot",
+    "description": "MTG MagicBot for Telegram",
+    "license": "Apache-2.0",
+    "keywords": [
+        "framework",
+        "zf2",
+        "telegram",
+        "bot",
+        "magic",
+        "gathering",
+        "wizards",
+        "mtg"
+    ],
+    "homepage": "https://github.com/BreyndotEchse/mtg-bot",
+    "authors": [
+        {
+            "name": "Marvin Feldmann",
+            "homepage": "https://github.com/BreyndotEchse",
+            "role": "Developer"
+        }
+    ],
     "require": {
-        "php": ">=5.3.3",
-        "zendframework/zendframework": "2.*",
-        "doctrine/doctrine-orm-module": "*"
+        "php": ">=5.4",
+        "zendframework/zendframework": "~2.3",
+        "doctrine/doctrine-orm-module": "~0.9"
     }
 }
