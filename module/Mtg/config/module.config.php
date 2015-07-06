@@ -5,15 +5,13 @@ return [
             'default' => [
                 'type'    => 'Segment',
                 'options' => [
-                    'route'    => '/[:controller[/:action]]',
+                    'route'    => '/[:controller]',
                     'constraints' => [
                         'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                        'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
                     ],
                     'defaults' => [
                         '__NAMESPACE__' => 'Mtg\Controller',
                         'controller' => 'index',
-                        'action' => 'index',
                     ],
                 ],
             ],
@@ -27,7 +25,7 @@ return [
     ],
     'controllers' => [
         'invokables' => [
-            'Mtg\Controller\Index' => 'Mtg\Controller\IndexController'
+            'Mtg\Controller\Index' => 'Mtg\Controller\IndexController',
         ],
     ],
     'view_manager' => [
@@ -37,7 +35,6 @@ return [
         'not_found_template' => 'error/404',
         'exception_template' => 'error/index',
         'template_map' => [
-            'mtg/index/index' => __DIR__ . '/../view/mtg/index/index.twig',
             'error/404' => __DIR__ . '/../view/error/404.phtml',
             'error/index' => __DIR__ . '/../view/error/index.phtml',
         ],
@@ -46,13 +43,6 @@ return [
         ],
         'strategies' => [
             'ViewJsonStrategy',
-        ],
-    ],
-    // Placeholder for console routes
-    'console' => [
-        'router' => [
-            'routes' => [
-            ],
         ],
     ],
 ];

@@ -6,11 +6,8 @@ use Zend\View\Model\JsonModel;
 
 class IndexController extends AbstractRestfulController
 {
-    public function create($data)
+    public function getList()
     {
-        $id = $data['update_id'];
-        
-
         return new JsonModel(array(
             'data' => 'test',
         ));

@@ -1,5 +1,5 @@
 <?php
-namespace Mtg\Model;
+namespace TgBotApi\Model;
 
 use DateTime;
 
@@ -120,7 +120,7 @@ class Message
 
     /**
      * @param integer $id
-     * @return Message
+     * @return self
      */
     public function setId($id)
     {
@@ -138,7 +138,7 @@ class Message
 
     /**
      * @param integer $messageId
-     * @return Message
+     * @return self
      */
     public function setMessageId($messageId)
     {
@@ -156,7 +156,7 @@ class Message
 
     /**
      * @param User $from
-     * @return Message
+     * @return self
      */
     public function setFrom(User $from)
     {
@@ -174,7 +174,7 @@ class Message
 
     /**
      * @param DateTime $date
-     * @return Message
+     * @return self
      */
     public function setDate(DateTime $date)
     {
@@ -192,7 +192,7 @@ class Message
 
     /**
      * @param ConversationInterface $chat
-     * @return Message
+     * @return self
      */
     public function setChat(ConversationInterface $chat)
     {
@@ -209,8 +209,8 @@ class Message
     }
 
     /**
-     * @param \Mtg\Model\User $forwardFrom
-     * @return \Mtg\Model\Message
+     * @param User $forwardFrom
+     * @return self
      */
     public function setForwardFrom(User $forwardFrom)
     {
@@ -228,7 +228,7 @@ class Message
 
     /**
      * @param DateTime $forwardDate
-     * @return \Mtg\Model\Message
+     * @return self
      */
     public function setForwardDate(DateTime $forwardDate)
     {
@@ -245,8 +245,8 @@ class Message
     }
 
     /**
-     * @param \Mtg\Model\Message $replyToMessage
-     * @return \Mtg\Model\Message
+     * @param Message $replyToMessage
+     * @return self
      */
     public function setReplyToMessage(Message $replyToMessage)
     {
@@ -264,7 +264,7 @@ class Message
 
     /**
      * @param string $text
-     * @return \Mtg\Model\Message
+     * @return self
      */
     public function setText($text)
     {
@@ -281,8 +281,8 @@ class Message
     }
 
     /**
-     * @param \Mtg\Model\Audio $audio
-     * @return \Mtg\Model\Message
+     * @param Audio $audio
+     * @return self
      */
     public function setAudio(Audio $audio)
     {
@@ -299,8 +299,8 @@ class Message
     }
 
     /**
-     * @param \Mtg\Model\Document $document
-     * @return \Mtg\Model\Message
+     * @param Document $document
+     * @return self
      */
     public function setDocument(Document $document)
     {
@@ -318,7 +318,7 @@ class Message
 
     /**
      * @param array $photo
-     * @return \Mtg\Model\Message
+     * @return self
      */
     public function setPhoto(array $photo)
     {
@@ -335,8 +335,8 @@ class Message
     }
 
     /**
-     * @param \Mtg\Model\Sticker $sticker
-     * @return \Mtg\Model\Message
+     * @param Sticker $sticker
+     * @return self
      */
     public function setSticker(Sticker $sticker)
     {
@@ -353,8 +353,8 @@ class Message
     }
 
     /**
-     * @param \Mtg\Model\Video $video
-     * @return \Mtg\Model\Message
+     * @param Video $video
+     * @return self
      */
     public function setVideo(Video $video)
     {
@@ -371,8 +371,8 @@ class Message
     }
 
     /**
-     * @param \Mtg\Model\Contact $contact
-     * @return \Mtg\Model\Message
+     * @param Contact $contact
+     * @return self
      */
     public function setContact(Contact $contact)
     {
@@ -389,8 +389,8 @@ class Message
     }
 
     /**
-     * @param \Mtg\Model\Location $location
-     * @return \Mtg\Model\Message
+     * @param Location $location
+     * @return self
      */
     public function setLocation(Location $location)
     {
@@ -407,8 +407,8 @@ class Message
     }
 
     /**
-     * @param \Mtg\Model\User $newChatParticipant
-     * @return \Mtg\Model\Message
+     * @param User $newChatParticipant
+     * @return self
      */
     public function setNewChatParticipant(User $newChatParticipant)
     {
@@ -425,8 +425,8 @@ class Message
     }
 
     /**
-     * @param \Mtg\Model\User $leftChatParticipant
-     * @return \Mtg\Model\Message
+     * @param User $leftChatParticipant
+     * @return self
      */
     public function setLeftChatParticipant(User $leftChatParticipant)
     {
@@ -444,7 +444,7 @@ class Message
 
     /**
      * @param string $newChatTitle
-     * @return \Mtg\Model\Message
+     * @return self
      */
     public function setNewChatTitle($newChatTitle)
     {
@@ -462,7 +462,7 @@ class Message
 
     /**
      * @param array $newChatPhoto
-     * @return \Mtg\Model\Message
+     * @return self
      */
     public function setNewChatPhoto(array $newChatPhoto)
     {
@@ -480,7 +480,7 @@ class Message
 
     /**
      * @param boolean $deleteChatPhoto
-     * @return \Mtg\Model\Message
+     * @return self
      */
     public function setDeleteChatPhoto($deleteChatPhoto)
     {
@@ -498,7 +498,7 @@ class Message
 
     /**
      * @param boolean $groupChatCreated
-     * @return \Mtg\Model\Message
+     * @return self
      */
     public function setGroupChatCreated($groupChatCreated)
     {

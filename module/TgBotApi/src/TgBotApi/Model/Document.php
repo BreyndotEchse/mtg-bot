@@ -1,5 +1,5 @@
 <?php
-namespace Mtg\Model;
+namespace TgBotApi\Model;
 
 class Document extends AbstractFile
 {
@@ -23,7 +23,7 @@ class Document extends AbstractFile
 
     /**
      * @param PhotoSize $thumb
-     * @return Document
+     * @return self
      */
     public function setThumb(PhotoSize $thumb)
     {
@@ -41,7 +41,7 @@ class Document extends AbstractFile
 
     /**
      * @param string $fileName
-     * @return Document
+     * @return self
      */
     public function setFileName($fileName)
     {

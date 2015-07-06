@@ -1,5 +1,5 @@
 <?php
-namespace Mtg\Model;
+namespace TgBotApi\Model;
 
 class User implements ConversationInterface
 {
@@ -33,7 +33,7 @@ class User implements ConversationInterface
 
     /**
      * @param integer $id
-     * @return User
+     * @return self
      */
     public function setId($id)
     {
@@ -51,7 +51,7 @@ class User implements ConversationInterface
 
     /**
      * @param string $firstName
-     * @return User
+     * @return self
      */
     public function setFirstName($firstName)
     {
@@ -69,7 +69,7 @@ class User implements ConversationInterface
 
     /**
      * @param string $lastName
-     * @return User
+     * @return self
      */
     public function setLastName($lastName)
     {
@@ -87,7 +87,7 @@ class User implements ConversationInterface
 
     /**
      * @param string $username
-     * @return User
+     * @return self
      */
     public function setUsername($username)
     {

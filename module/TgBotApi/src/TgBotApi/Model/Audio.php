@@ -1,5 +1,5 @@
 <?php
-namespace Mtg\Model;
+namespace TgBotApi\Model;
 
 class Audio extends AbstractFile
 {
@@ -18,7 +18,7 @@ class Audio extends AbstractFile
 
     /**
      * @param integer $duration
-     * @return Audio
+     * @return self
      */
     public function setDuration($duration)
     {

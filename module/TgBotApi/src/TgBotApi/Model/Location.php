@@ -1,5 +1,5 @@
 <?php
-namespace Mtg\Model;
+namespace TgBotApi\Model;
 
 class Location
 {
@@ -23,7 +23,7 @@ class Location
 
     /**
      * @param float $longitude
-     * @return Location
+     * @return self
      */
     public function setLongitude($longitude)
     {
@@ -41,7 +41,7 @@ class Location
 
     /**
      * @param float $latitude
-     * @return Location
+     * @return self
      */
     public function setLatitude($latitude)
     {

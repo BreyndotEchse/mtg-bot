@@ -1,5 +1,5 @@
 <?php
-namespace Mtg\Model;
+namespace TgBotApi\Model;
 
 class Video extends AbstractFile
 {
@@ -38,7 +38,7 @@ class Video extends AbstractFile
 
     /**
      * @param integer $width
-     * @return Video
+     * @return self
      */
     public function setWidth($width)
     {
@@ -56,7 +56,7 @@ class Video extends AbstractFile
 
     /**
      * @param integer $height
-     * @return Video
+     * @return self
      */
     public function setHeight($height)
     {
@@ -92,7 +92,7 @@ class Video extends AbstractFile
 
     /**
      * @param PhotoSize $thumb
-     * @return Video
+     * @return self
      */
     public function setThumb(PhotoSize $thumb)
     {
@@ -110,7 +110,7 @@ class Video extends AbstractFile
 
     /**
      * @param string $caption
-     * @return Video
+     * @return self
      */
     public function setCaption($caption)
     {

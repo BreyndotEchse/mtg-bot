@@ -1,7 +1,7 @@
 <?php
-namespace Mtg\Model;
+namespace TgBotApi\Model;
 
-class PhotoSize
+abstract class AbstractFile
 {
     /**
      * @var string
@@ -9,14 +9,9 @@ class PhotoSize
     protected $fileId;
 
     /**
-     * @var integer
+     * @var string
      */
-    protected $width;
-
-    /**
-     * @var integer
-     */
-    protected $height;
+    protected $mineType;
 
     /**
      * @var integer
@@ -33,7 +28,7 @@ class PhotoSize
 
     /**
      * @param string $fileId
-     * @return PhotoSize
+     * @return self
      */
     public function setFileId($fileId)
     {
@@ -42,38 +37,20 @@ class PhotoSize
     }
 
     /**
-     * @return integer
+     * @return string
      */
-    public function getWidth()
+    public function getMineType()
     {
-        return $this->width;
+        return $this->mineType;
     }
 
     /**
-     * @param integer $width
-     * @return PhotoSize
+     * @param string $mineType
+     * @return self
      */
-    public function setWidth($width)
+    public function setMineType($mineType)
     {
-        $this->width = $width;
-        return $this;
-    }
-
-    /**
-     * @return integer
-     */
-    public function getHeight()
-    {
-        return $this->height;
-    }
-
-    /**
-     * @param integer $height
-     * @return PhotoSize
-     */
-    public function setHeight($height)
-    {
-        $this->height = $height;
+        $this->mineType = $mineType;
         return $this;
     }
 
@@ -87,12 +64,11 @@ class PhotoSize
 
     /**
      * @param integer $fileSize
-     * @return PhotoSize
+     * @return self
      */
     public function setFileSize($fileSize)
     {
         $this->fileSize = $fileSize;
         return $this;
     }
-
 }

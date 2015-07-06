@@ -1,5 +1,5 @@
 <?php
-namespace Mtg\Model;
+namespace TgBotApi\Model;
 
 class Sticker extends AbstractFile
 {
@@ -28,7 +28,7 @@ class Sticker extends AbstractFile
 
     /**
      * @param integer $width
-     * @return Sticker
+     * @return self
      */
     public function setWidth($width)
     {
@@ -46,7 +46,7 @@ class Sticker extends AbstractFile
 
     /**
      * @param integer $height
-     * @return Sticker
+     * @return self
      */
     public function setHeight($height)
     {
@@ -64,7 +64,7 @@ class Sticker extends AbstractFile
 
     /**
      * @param PhotoSize $thumb
-     * @return Sticker
+     * @return self
      */
     public function setThumb(PhotoSize $thumb)
     {

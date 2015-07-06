@@ -1,5 +1,5 @@
 <?php
-namespace Mtg\Model;
+namespace TgBotApi\Model;
 
 class Contact
 {
@@ -33,7 +33,7 @@ class Contact
 
     /**
      * @param string $phoneNumber
-     * @return Contact
+     * @return self
      */
     public function setPhoneNumber($phoneNumber)
     {
@@ -51,7 +51,7 @@ class Contact
 
     /**
      * @param string $firstName
-     * @return Contact
+     * @return self
      */
     public function setFirstName($firstName)
     {
@@ -69,7 +69,7 @@ class Contact
 
     /**
      * @param string $lastName
-     * @return Contact
+     * @return self
      */
     public function setLastName($lastName)
     {
@@ -87,7 +87,7 @@ class Contact
 
     /**
      * @param string $userId
-     * @return Contact
+     * @return self
      */
     public function setUserId($userId)
     {
