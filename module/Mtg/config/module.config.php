@@ -26,6 +26,7 @@ return [
     'controllers' => [
         'invokables' => [
             'Mtg\Controller\Index' => 'Mtg\Controller\IndexController',
+            'Mtg\Controller\Import' => 'Mtg\Controller\ImportController',
         ],
     ],
     'view_manager' => [
@@ -43,6 +44,22 @@ return [
         ],
         'strategies' => [
             'ViewJsonStrategy',
+        ],
+    ],
+    // Placeholder for console routes
+    'console' => [
+        'router' => [
+            'routes' => [
+                'import' => [
+                    'options' => [
+                        'route' => 'import <filePath>',
+                        'defaults' => [
+                            'controller' => 'Mtg\Controller\Import',
+                            'action' => 'import',
+                        ],
+                    ],
+                ],
+            ],
         ],
     ],
 ];
