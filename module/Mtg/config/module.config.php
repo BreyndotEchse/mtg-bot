@@ -62,4 +62,18 @@ return [
             ],
         ],
     ],
+    'doctrine' => [
+        'driver' => [
+            'AnnotationDriver' => [
+                'paths' => [
+                    __DIR__ . '/../src/Mtg/Model',
+                ],
+            ],
+            'orm_default' => [
+                'drivers' => [
+                    'Mtg\Model' => 'AnnotationDriver',
+                ],
+            ],
+        ],
+    ],
 ];
