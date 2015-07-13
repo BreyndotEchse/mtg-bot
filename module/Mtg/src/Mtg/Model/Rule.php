@@ -123,15 +123,15 @@ class Rule
     }
 
     /**
-     * @param string $id
+     * @param string $subId
      * @return Rule
      */
-    public function getChildRule($id)
+    public function getChildRule($subId)
     {
-        if (empty($this->childRules[$id])) {
+        if (empty($this->childRules[$subId])) {
             return null;
         }
-        return $this->childRules[$id];
+        return $this->childRules[$subId];
     }
 
     /**
@@ -140,7 +140,7 @@ class Rule
      */
     public function addChildRule(Rule $rule)
     {
-        $this->childRules[$rule->getId()] = $rule;
+        $this->childRules[$rule->getSubId()] = $rule;
         return $this;
     }
 
