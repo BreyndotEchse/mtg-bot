@@ -6,7 +6,10 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="rule", indexes={@ORM\Index(name="ruletext", columns={"ruletext"}, flags={"fulltext"})})
+ * @ORM\Table(name="rule", indexes={
+ *      @ORM\Index(name="ruletext", columns={"ruletext"}, flags={"fulltext"}),
+ *      @ORM\Index(name="sub_id", columns={"sub_id"})
+ * })
  */
 class Rule
 {
@@ -18,6 +21,12 @@ class Rule
     protected $id;
 
     /**
+     * @ORM\Column(name="sub_id", type="string", length=6, options={"fixed"=true})
+     * @var string
+     */
+    protected $subId;
+
+    /**
      * @ORM\ManyToOne(targetEntity="Rule", inversedBy="childRules")
      * @ORM\JoinColumn(name="parent_id", referencedColumnName="id", nullable=true)
      * @var Rule
@@ -25,7 +34,7 @@ class Rule
     protected $parentRule;
 
     /**
-     * @ORM\OneToMany(targetEntity="Rule", mappedBy="parentRule", indexBy="id")
+     * @ORM\OneToMany(targetEntity="Rule", mappedBy="parentRule", indexBy="subId")
      * @var Rule[]
      */
     protected $childRules;
@@ -56,6 +65,24 @@ class Rule
     public function setId($id)
     {
         $this->id = $id;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSubId()
+    {
+        return $this->subId;
+    }
+
+    /**
+     * @param string $subId
+     * @return Rule
+     */
+    public function setSubId($subId)
+    {
+        $this->subId = $subId;
         return $this;
     }
 
