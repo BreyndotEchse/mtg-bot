@@ -22,6 +22,9 @@ return [
             'Zend\Cache\Service\StorageCacheAbstractServiceFactory',
             'Zend\Log\LoggerAbstractServiceFactory',
         ],
+        'factories' => [
+            'Mtg\RulesImporter' => 'Mtg\RulesImporter\Factory',
+        ],
     ],
     'controllers' => [
         'invokables' => [

@@ -14,6 +14,7 @@ class ImportController extends AbstractActionController
             throw new RuntimeException('You can only use this action from a console!');
         }
 
-        return 'test';
+        $importer = new \Mtg\RulesImporter\RulesImporter;
+        $importer->import($this->params('filePath'));
     }
 }
