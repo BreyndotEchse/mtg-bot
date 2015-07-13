@@ -29,7 +29,9 @@ return [
     'controllers' => [
         'invokables' => [
             'Mtg\Controller\Index' => 'Mtg\Controller\IndexController',
-            'Mtg\Controller\Import' => 'Mtg\Controller\ImportController',
+        ],
+        'factories' => [
+            'Mtg\Controller\Import' => 'Mtg\Controller\ImportController\Factory',
         ],
     ],
     'view_manager' => [

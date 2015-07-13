@@ -140,6 +140,9 @@ class Rule
      */
     public function addChildRule(Rule $rule)
     {
+        if ($this !== $rule->getParentRule()) {
+            $rule->setParentRule($this);
+        }
         $this->childRules[$rule->getSubId()] = $rule;
         return $this;
     }

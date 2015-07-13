@@ -46,7 +46,10 @@ class RulesImporter
     {
         $lineArray = array_map('trim', file($filePath));
         $sections = $this->parseSections($lineArray);
+
         $this->parseRules($sections['rules']);
+        $this->objectManager->flush();
+        return true;
     }
 
     /**
@@ -70,6 +73,9 @@ class RulesImporter
         return $sections;
     }
 
+    /**
+     * @param array $rulesArray
+     */
     protected function parseRules($rulesArray)
     {
         $rules = array();
@@ -89,6 +95,7 @@ class RulesImporter
             $currentRule = new Rule;
             $currentRule->setId(trim($matches[0]))
                 ->setSubId(last($matches));
+            $this->objectManager->persist($currentRule);
 
             if (empty($matches['major'])) {
                 $rules[$matches['chapter']] = $currentRule;
