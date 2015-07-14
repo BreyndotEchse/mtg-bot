@@ -44,12 +44,21 @@ class RulesImporter
      */
     public function import($filePath)
     {
-        $lineArray = array_map('trim', file($filePath));
+        $lineArray = array_map(array($this, 'prepareLine'), file($filePath));
         $sections = $this->parseSections($lineArray);
 
         $this->parseRules($sections['rules']);
         $this->objectManager->flush();
         return true;
+    }
+
+    /**
+     * @param string $ruleLine
+     * @return string
+     */
+    protected function prepareLine($ruleLine)
+    {
+        return mb_convert_encoding(trim($ruleLine), 'UTF-8', 'CP1252');
     }
 
     /**
