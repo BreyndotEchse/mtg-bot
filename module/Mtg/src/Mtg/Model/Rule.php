@@ -15,16 +15,22 @@ class Rule
 {
     /**
      * @ORM\Id
-     * @ORM\Column(type="string", length=6, options={"fixed"=true})
+     * @ORM\Column(type="string", length=8, options={"fixed"=true})
      * @var string
      */
     protected $id;
 
     /**
-     * @ORM\Column(name="sub_id", type="string", length=6, options={"fixed"=true})
+     * @ORM\Column(name="sub_id", type="string", length=8, options={"fixed"=true})
      * @var string
      */
     protected $subId;
+
+    /**
+     * @ORM\Column(type="smallint", options={"unsigned"=true})
+     * @var integer
+     */
+    protected $depth;
 
     /**
      * @ORM\ManyToOne(targetEntity="Rule", inversedBy="childRules")
@@ -87,6 +93,24 @@ class Rule
     }
 
     /**
+     * @return integer
+     */
+    public function getDepth()
+    {
+        return $this->depth;
+    }
+
+    /**
+     * @param integer $depth
+     * @return Rule
+     */
+    public function setDepth($depth)
+    {
+        $this->depth = $depth;
+        return $this;
+    }
+
+    /**
      * @return Rule
      */
     public function getParentRule()
@@ -140,6 +164,9 @@ class Rule
      */
     public function addChildRule(Rule $rule)
     {
+        if ($this !== $rule->getParentRule()) {
+            $rule->setParentRule($this);
+        }
         $this->childRules[$rule->getSubId()] = $rule;
         return $this;
     }

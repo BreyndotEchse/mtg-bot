@@ -44,9 +44,21 @@ class RulesImporter
      */
     public function import($filePath)
     {
-        $lineArray = array_map('trim', file($filePath));
+        $lineArray = array_map(array($this, 'prepareLine'), file($filePath));
         $sections = $this->parseSections($lineArray);
+
         $this->parseRules($sections['rules']);
+        $this->objectManager->flush();
+        return true;
+    }
+
+    /**
+     * @param string $ruleLine
+     * @return string
+     */
+    protected function prepareLine($ruleLine)
+    {
+        return mb_convert_encoding(trim($ruleLine), 'UTF-8', 'CP1252');
     }
 
     /**
@@ -70,6 +82,9 @@ class RulesImporter
         return $sections;
     }
 
+    /**
+     * @param array $rulesArray
+     */
     protected function parseRules($rulesArray)
     {
         $rules = array();
@@ -86,23 +101,31 @@ class RulesImporter
                 continue;
             }
 
+            $depth = 1;
             $currentRule = new Rule;
             $currentRule->setId(trim($matches[0]))
-                ->setSubId(last($matches));
+                ->setSubId(end($matches))
+                ->setRuletext(substr($ruleLine, strlen($matches[0])));
+            $this->objectManager->persist($currentRule);
 
             if (empty($matches['major'])) {
+                $currentRule->setDepth($depth);
                 $rules[$matches['chapter']] = $currentRule;
                 continue;
             }
+            ++$depth;
 
             $parentRule = $rules[$matches['chapter']];
             if (!empty($matches['minor'])) {
                 $parentRule = $parentRule->getChildRule($matches['major']);
+                ++$depth;
             }
 
             if (!empty($matches['paragraph'])) {
                 $parentRule = $parentRule->getChildRule($matches['minor']);
+                ++$depth;
             }
+            $currentRule->setDepth($depth);
             $parentRule->addChildRule($currentRule);
         }
     }
