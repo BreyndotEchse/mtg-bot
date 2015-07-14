@@ -101,6 +101,7 @@ class RulesImporter
                 continue;
             }
 
+            $depth = 1;
             $currentRule = new Rule;
             $currentRule->setId(trim($matches[0]))
                 ->setSubId(end($matches))
@@ -108,18 +109,23 @@ class RulesImporter
             $this->objectManager->persist($currentRule);
 
             if (empty($matches['major'])) {
+                $currentRule->setDepth($depth);
                 $rules[$matches['chapter']] = $currentRule;
                 continue;
             }
+            ++$depth;
 
             $parentRule = $rules[$matches['chapter']];
             if (!empty($matches['minor'])) {
                 $parentRule = $parentRule->getChildRule($matches['major']);
+                ++$depth;
             }
 
             if (!empty($matches['paragraph'])) {
                 $parentRule = $parentRule->getChildRule($matches['minor']);
+                ++$depth;
             }
+            $currentRule->setDepth($depth);
             $parentRule->addChildRule($currentRule);
         }
     }

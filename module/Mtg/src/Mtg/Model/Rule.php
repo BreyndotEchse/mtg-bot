@@ -27,6 +27,12 @@ class Rule
     protected $subId;
 
     /**
+     * @ORM\Column(type="smallint", options={"unsigned"=true})
+     * @var integer
+     */
+    protected $depth;
+
+    /**
      * @ORM\ManyToOne(targetEntity="Rule", inversedBy="childRules")
      * @ORM\JoinColumn(name="parent_id", referencedColumnName="id", nullable=true)
      * @var Rule
@@ -83,6 +89,24 @@ class Rule
     public function setSubId($subId)
     {
         $this->subId = $subId;
+        return $this;
+    }
+
+    /**
+     * @return integer
+     */
+    public function getDepth()
+    {
+        return $this->depth;
+    }
+
+    /**
+     * @param integer $depth
+     * @return Rule
+     */
+    public function setDepth($depth)
+    {
+        $this->depth = $depth;
         return $this;
     }
 
