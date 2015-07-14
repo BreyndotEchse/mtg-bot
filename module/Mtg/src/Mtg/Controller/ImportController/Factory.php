@@ -12,7 +12,6 @@ class Factory implements FactoryInterface
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
-        echo get_class($serviceLocator);die;
         $rulesImporter = $serviceLocator->getServiceLocator()->get('Mtg\RulesImporter');
         $controller = new \Mtg\Controller\ImportController($rulesImporter);
 

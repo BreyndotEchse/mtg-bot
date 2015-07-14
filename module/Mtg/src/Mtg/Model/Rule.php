@@ -15,13 +15,13 @@ class Rule
 {
     /**
      * @ORM\Id
-     * @ORM\Column(type="string", length=6, options={"fixed"=true})
+     * @ORM\Column(type="string", length=8, options={"fixed"=true})
      * @var string
      */
     protected $id;
 
     /**
-     * @ORM\Column(name="sub_id", type="string", length=6, options={"fixed"=true})
+     * @ORM\Column(name="sub_id", type="string", length=8, options={"fixed"=true})
      * @var string
      */
     protected $subId;

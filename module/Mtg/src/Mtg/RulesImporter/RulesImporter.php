@@ -94,7 +94,8 @@ class RulesImporter
 
             $currentRule = new Rule;
             $currentRule->setId(trim($matches[0]))
-                ->setSubId(last($matches));
+                ->setSubId(end($matches))
+                ->setRuletext(substr($ruleLine, strlen($matches[0])));
             $this->objectManager->persist($currentRule);
 
             if (empty($matches['major'])) {

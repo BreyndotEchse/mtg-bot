@@ -21,7 +21,6 @@ class ImportController extends AbstractActionController
         $this->rulesImporter = $rulesImporter;
     }
 
-
     public function importAction()
     {
         $request = $this->getRequest();
@@ -29,7 +28,6 @@ class ImportController extends AbstractActionController
             throw new RuntimeException('You can only use this action from a console!');
         }
 
-        $importer = new RulesImporter;
-        $importer->import($this->params('filePath'));
+        $this->rulesImporter->import($this->params('filePath'));
     }
 }
