@@ -102,9 +102,12 @@ class RulesImporter
             }
 
             $depth = 1;
+            $id = rtrim(trim($matches[0]), '.');
+            $subId = rtrim(trim(end($matches)), '.');
+
             $currentRule = new Rule;
-            $currentRule->setId(trim($matches[0]))
-                ->setSubId(end($matches))
+            $currentRule->setId($id)
+                ->setSubId($subId)
                 ->setRuletext(substr($ruleLine, strlen($matches[0])));
             $this->objectManager->persist($currentRule);
 
