@@ -6,7 +6,7 @@ use Zend\View\Model\JsonModel;
 
 class IndexController extends AbstractRestfulController
 {
-    public function getList()
+    public function create($data)
     {
         return new JsonModel(array(
             'data' => 'test',

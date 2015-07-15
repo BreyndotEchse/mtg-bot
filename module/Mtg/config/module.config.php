@@ -5,9 +5,10 @@ return [
             'default' => [
                 'type'    => 'Segment',
                 'options' => [
-                    'route'    => '/[:controller]',
+                    'route'    => '/[:controller[/:id]]',
                     'constraints' => [
                         'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id' => '[0-9][A-Za-z0-9\.]*',
                     ],
                     'defaults' => [
                         '__NAMESPACE__' => 'Mtg\Controller',
@@ -31,7 +32,8 @@ return [
             'Mtg\Controller\Index' => 'Mtg\Controller\IndexController',
         ],
         'factories' => [
-            'Mtg\Controller\Import' => 'Mtg\Controller\ImportController\Factory',
+            'Mtg\Controller\Import' => 'Mtg\Controller\ImportControllerFactory',
+            'Mtg\Controller\Rule' => 'Mtg\Controller\RuleControllerFactory',
         ],
     ],
     'view_manager' => [
