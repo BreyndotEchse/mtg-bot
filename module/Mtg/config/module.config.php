@@ -16,6 +16,20 @@ return [
                     ],
                 ],
             ],
+            'rulesearch' => [
+                'type'    => 'Segment',
+                'options' => [
+                    'route'    => '/rule/search/:token',
+                    'constraints' => [
+                        'token' => '[^/]*',
+                    ],
+                    'defaults' => [
+                        '__NAMESPACE__' => 'Mtg\Controller',
+                        'controller' => 'rule',
+                        'action' => 'search',
+                    ],
+                ],
+            ],
         ],
     ],
     'service_manager' => [

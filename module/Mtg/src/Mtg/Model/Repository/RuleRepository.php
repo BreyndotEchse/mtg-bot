@@ -14,11 +14,11 @@ class RuleRepository extends EntityRepository
     {
         $queryBuilder = $this->createQueryBuilder('rule');
         $queryBuilder->select('rule')
-            ->addSelect('HIDDEN FLOOR(MATCH(ruletext) AGAINST(:fulltext1 BOOLEAN) / 10 + (10 - rule.depth)) AS relevancy')
-            ->andWhere('MATCH(ruletext) AGAINST(:fulltext2 BOOLEAN)')
+            ->addSelect('FLOOR(MATCH(rule.ruletext) AGAINST(:fulltext1 BOOLEAN) / 10 + (10 - rule.depth)) AS HIDDEN relevancy')
+            ->andWhere('MATCH(rule.ruletext) AGAINST(:fulltext2 BOOLEAN) > 1')
             ->addOrderBy('relevancy', 'DESC')
-            ->addOrderBy('depth', 'ASC')
-            ->addOrderBy('ruletext', 'ASC')
+            ->addOrderBy('rule.depth', 'ASC')
+            ->addOrderBy('rule.ruletext', 'ASC')
             ->setParameter('fulltext1', $fulltext)
             ->setParameter('fulltext2', $fulltext)
             ->setMaxResults(5)
