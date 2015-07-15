@@ -15,6 +15,12 @@ return [
                 'query_cache' => 'array',
                 'result_cache' => 'array',
                 'generate_proxies' => true,
+                'numeric_functions' => [
+                    'FLOOR' => 'Mtg\Query\Mysql\Floor',
+                ],
+                'string_functions' => [
+                    'MATCH' => 'DoctrineExtensions\Query\Mysql\MatchAgainst',
+                ],
             ],
         ],
         'driver' => [

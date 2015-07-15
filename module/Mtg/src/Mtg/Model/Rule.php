@@ -5,7 +5,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Mtg\Model\Repository\RuleRepository")
  * @ORM\Table(name="rule", indexes={
  *      @ORM\Index(name="ruletext", columns={"ruletext"}, flags={"fulltext"}),
  *      @ORM\Index(name="sub_id", columns={"sub_id"})
@@ -33,14 +33,14 @@ class Rule
     protected $depth;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Rule", inversedBy="childRules")
+     * @ORM\ManyToOne(targetEntity="Rule", inversedBy="childRules", fetch="EAGER")
      * @ORM\JoinColumn(name="parent_id", referencedColumnName="id", nullable=true)
      * @var Rule
      */
     protected $parentRule;
 
     /**
-     * @ORM\OneToMany(targetEntity="Rule", mappedBy="parentRule", indexBy="subId")
+     * @ORM\OneToMany(targetEntity="Rule", mappedBy="parentRule", indexBy="subId", fetch="EAGER")
      * @var Rule[]
      */
     protected $childRules;

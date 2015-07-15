@@ -1,19 +1,19 @@
 <?php
-namespace Mtg\Controller\ImportController;
+namespace Mtg\Controller;
 
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
-class Factory implements FactoryInterface
+class ImportControllerFactory implements FactoryInterface
 {
     /**
      * @param ServiceLocatorInterface $serviceLocator
-     * @return RulesImporter
+     * @return ImportController
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
         $rulesImporter = $serviceLocator->getServiceLocator()->get('Mtg\RulesImporter');
-        $controller = new \Mtg\Controller\ImportController($rulesImporter);
+        $controller = new ImportController($rulesImporter);
 
         return $controller;
     }
