@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass="Mtg\Model\Repository\GlossaryEntryRepository")
  * @ORM\Table(name="glossaryentry", indexes={
- *      @ORM\Index(name="glossarytext", columns={"glossarytext"}, flags={"fulltext"})
+ *      @ORM\Index(name="glossarytext", columns={"id", "glossarytext"}, flags={"fulltext"})
  * })
  */
 class GlossaryEntry

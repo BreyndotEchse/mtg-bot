@@ -14,8 +14,8 @@ class GlossaryEntryRepository extends EntityRepository
     {
         $queryBuilder = $this->createQueryBuilder('glossary');
         $queryBuilder->select('glossary')
-            ->addSelect('MATCH(glossary.glossarytext) AGAINST(:fulltext1 BOOLEAN) AS HIDDEN relevancy')
-            ->andWhere('MATCH(glossary.glossarytext) AGAINST(:fulltext2 BOOLEAN) > 1')
+            ->addSelect('MATCH(glossary.id, glossary.glossarytext) AGAINST(:fulltext1 BOOLEAN) AS HIDDEN relevancy')
+            ->andWhere('MATCH(glossary.id, glossary.glossarytext) AGAINST(:fulltext2 BOOLEAN) > 1')
             ->addOrderBy('relevancy', 'DESC')
             ->addOrderBy('glossary.id', 'ASC')
             ->setParameter('fulltext1', $fulltext)
