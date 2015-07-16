@@ -8,7 +8,7 @@ return [
                     'route'    => '/[:controller[/:id]]',
                     'constraints' => [
                         'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                        'id' => '[0-9][A-Za-z0-9\.]*',
+                        'id' => '[A-Za-z0-9\.]+',
                     ],
                     'defaults' => [
                         '__NAMESPACE__' => 'Mtg\Controller',
@@ -26,6 +26,20 @@ return [
                     'defaults' => [
                         '__NAMESPACE__' => 'Mtg\Controller',
                         'controller' => 'rule',
+                        'action' => 'search',
+                    ],
+                ],
+            ],
+            'glossarysearch' => [
+                'type'    => 'Segment',
+                'options' => [
+                    'route'    => '/glossary/search/:token',
+                    'constraints' => [
+                        'token' => '[^/]*',
+                    ],
+                    'defaults' => [
+                        '__NAMESPACE__' => 'Mtg\Controller',
+                        'controller' => 'glossary',
                         'action' => 'search',
                     ],
                 ],
@@ -48,6 +62,7 @@ return [
         'factories' => [
             'Mtg\Controller\Import' => 'Mtg\Controller\ImportControllerFactory',
             'Mtg\Controller\Rule' => 'Mtg\Controller\RuleControllerFactory',
+            'Mtg\Controller\Glossary' => 'Mtg\Controller\GlossaryControllerFactory',
         ],
     ],
     'view_manager' => [
