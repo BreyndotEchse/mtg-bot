@@ -49,6 +49,7 @@ class RulesImporter
         $sections = $this->parseSections($lineArray);
 
         $this->parseRules($sections['rules']);
+        $this->parseGlossaryEntries($sections['glossary']);
         $this->objectManager->flush();
         return true;
     }
