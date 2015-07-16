@@ -4,8 +4,10 @@ namespace Mtg\Model;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity
- * @ORM\Table(name="glossaryentry")
+ * @ORM\Entity(repositoryClass="Mtg\Model\Repository\GlossaryEntryRepository")
+ * @ORM\Table(name="glossaryentry", indexes={
+ *      @ORM\Index(name="glossarytext", columns={"glossarytext"}, flags={"fulltext"})
+ * })
  */
 class GlossaryEntry
 {
