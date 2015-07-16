@@ -1,7 +1,7 @@
 <?php
 namespace TgBotApi\Model;
 
-interface ConversationInterface
+interface InputFileInterface
 {
     public function getId();
 }
