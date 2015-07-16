@@ -11,6 +11,9 @@ use Zend\Http\Client;
 
 class TelegramBotClient extends Client
 {
+    /**
+     * @var array
+     */
     protected $allowedActions = array(
         'typing',
         'upload_photo',
@@ -22,9 +25,45 @@ class TelegramBotClient extends Client
         'find_location',
     );
 
+    /**
+     * @var string
+     */
     protected $token;
 
-    protected $url = 'https://api.telegram.org/bot%s/%s';
+    /**
+     * @var string
+     */
+    protected $uri = 'https://api.telegram.org/bot%s/%s';
+
+    /**
+     * @var string
+     */
+    protected $cachedUri;
+
+    /**
+     * @param string $methodName
+     * @return string
+     */
+    protected function getBotUri($methodName = '')
+    {
+        if (null === $this->cachedUri) {
+            $this->cachedUri = sprintf($this->uri, $this->token, $methodName);
+        }
+        return $this->cachedUri;
+    }
+
+    protected function sendBotRequest($methodName, $data)
+    {
+        $uri = $this->getBotUri($methodName);
+        $method = ('send' === substr($methodName, 0, 4) ? 'post' : 'get');
+        $parameterSetter = 'setParameter' . ucfirst($method);
+
+        $this->setUri($uri)
+            ->setMethod(strtoupper($method))
+            ->$parameterSetter($data);
+
+        $response = $this->send();
+    }
 
     public function getUpdates($offset = null, $limit = null, $timeout = null)
     {
