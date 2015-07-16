@@ -2,6 +2,7 @@
 namespace Mtg\RulesImporter;
 
 use Doctrine\Common\Persistence\ObjectManager;
+use Mtg\Model\GlossaryEntry;
 use Mtg\Model\Rule;
 
 class RulesImporter
@@ -83,13 +84,13 @@ class RulesImporter
     }
 
     /**
-     * @param array $rulesArray
+     * @param array $ruleArray
      */
-    protected function parseRules($rulesArray)
+    protected function parseRules(array $ruleArray)
     {
         $rules = array();
         $currentRule = new Rule;
-        foreach ($rulesArray as $ruleLine) {
+        foreach ($ruleArray as $ruleLine) {
             if ('' === $ruleLine) {
                 continue;
             }
@@ -130,6 +131,29 @@ class RulesImporter
             }
             $currentRule->setDepth($depth);
             $parentRule->addChildRule($currentRule);
+        }
+    }
+
+    /**
+     * @param array $glossaryEntryArray
+     */
+    protected function parseGlossaryEntries(array $glossaryEntryArray)
+    {
+        $currentGlossaryEntry = new GlossaryEntry;
+        foreach ($glossaryEntryArray as $glossaryEntryLine) {
+            if ('' === $glossaryEntryLine) {
+                if ($currentGlossaryEntry->getId()) {
+                    $currentGlossaryEntry = new GlossaryEntry;
+                }
+                continue;
+            }
+
+            if (!$currentGlossaryEntry->getId()) {
+                $currentGlossaryEntry->setId($glossaryEntryLine);
+                $this->objectManager->persist($currentGlossaryEntry);
+            } else {
+                $currentGlossaryEntry->addGlossarytextLine($glossaryEntryLine);
+            }
         }
     }
 }
