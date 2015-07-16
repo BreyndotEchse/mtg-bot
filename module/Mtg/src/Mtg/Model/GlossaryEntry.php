@@ -64,9 +64,9 @@ class GlossaryEntry
      */
     public function addGlossarytextLine($glossarytextLine)
     {
-        $glossarytexArray = explode("\n", $this->ruletext);
+        $glossarytexArray = explode("\n", $this->glossarytext);
         $glossarytexArray[] = $glossarytextLine;
-        $this->ruletext = implode("\n", $glossarytexArray);
+        $this->glossarytext = implode("\n", $glossarytexArray);
         return $this;
     }
 
