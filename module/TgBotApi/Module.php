@@ -1,6 +1,7 @@
 <?php
 namespace TgBotApi;
 
+use Doctrine\Common\Annotations\AnnotationRegistry;
 use Zend\Mvc\ModuleRouteListener;
 use Zend\Mvc\MvcEvent;
 
@@ -11,6 +12,8 @@ class Module
         $eventManager        = $e->getApplication()->getEventManager();
         $moduleRouteListener = new ModuleRouteListener();
         $moduleRouteListener->attach($eventManager);
+
+        AnnotationRegistry::registerAutoloadNamespace('TgBotApi\Model\Annotation');
     }
 
     public function getAutoloaderConfig()
