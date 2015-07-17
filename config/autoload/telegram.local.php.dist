@@ -1,0 +1,9 @@
+<?php
+return [
+    'telegram' => [
+        'token' => '<bot-token>',
+        'options' => [
+            'adapter' => 'Zend\Http\Client\Adapter\Curl',
+        ],
+    ],
+];
