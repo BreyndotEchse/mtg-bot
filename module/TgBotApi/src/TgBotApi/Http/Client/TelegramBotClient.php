@@ -147,6 +147,14 @@ class TelegramBotClient extends Client
         if ($replyToMessage instanceof Message) {
             $replyToMessage = $replyToMessage->getId();
         }
+
+        return $this->sendBotRequest(__FUNCTION__, [
+            'chat_id' => $chat,
+            'text' => $text,
+            'disabled_web_page_preview' => $disabledWebPagePreview,
+            'reply_to_message' => $replyToMessage,
+            'reply_markup' => $replyMarkup,
+        ]);
     }
 
     /**
@@ -168,6 +176,12 @@ class TelegramBotClient extends Client
         if ($message instanceof Message) {
             $message = $message->getId();
         }
+
+        return $this->sendBotRequest(__FUNCTION__, [
+            'chat_id' => $chat,
+            'from_chat_id' => $fromChat,
+            'message_id' => $message,
+        ]);
     }
 
     /**
@@ -190,6 +204,10 @@ class TelegramBotClient extends Client
         } elseif ($file instanceof InputFileInterface) {
             $file = $file->getId();
         }
+
+        /**
+         * @todo Implement file upload
+         */
     }
 
     /**
@@ -270,6 +288,14 @@ class TelegramBotClient extends Client
         if ($chat instanceof ConversationInterface) {
             $chat = $chat->getId();
         }
+
+        return $this->sendBotRequest(__FUNCTION__, [
+            'chat_id' => $chat,
+            'latitude' => $latitude,
+            'longitude' => $longitude,
+            'reply_to_message_id' => $replyToMessage,
+            'reply_markup' => $replyMarkup,
+        ]);
     }
 
     /**
@@ -282,6 +308,11 @@ class TelegramBotClient extends Client
         if ($chat instanceof ConversationInterface) {
             $chat = $chat->getId();
         }
+
+        return $this->sendBotRequest(__FUNCTION__, [
+            'chat_id' => $chat,
+            'action' => $action,
+        ]);
     }
 
     /**
@@ -292,7 +323,9 @@ class TelegramBotClient extends Client
      */
     public function getUserProfilePhotos($user, $offset = null, $limit = null)
     {
-
+        /**
+         * @todo Implement user profile photos
+         */
     }
 
 }
