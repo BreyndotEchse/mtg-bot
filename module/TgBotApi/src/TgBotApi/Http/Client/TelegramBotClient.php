@@ -95,6 +95,10 @@ class TelegramBotClient extends Client
         $method = ('send' === substr($methodName, 0, 4) ? 'post' : 'get');
         $parameterSetter = 'setParameter' . ucfirst($method);
 
+        $data = array_filter($data, function($value) {
+            return null !== $value;
+        });
+
         $this->setUri($uri)
             ->setMethod(strtoupper($method))
             ->$parameterSetter($data);
