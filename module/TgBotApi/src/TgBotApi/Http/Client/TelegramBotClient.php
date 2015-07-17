@@ -2,6 +2,7 @@
 namespace TgBotApi\Http\Client;
 
 use SplFileInfo;
+use TgBotApi\Http\Client\Exception;
 use TgBotApi\Model\ConversationInterface;
 use TgBotApi\Model\InputFileInterface;
 use TgBotApi\Model\Message;
@@ -14,7 +15,7 @@ class TelegramBotClient extends Client
     /**
      * @var array
      */
-    protected $allowedActions = array(
+    protected $allowedActions = [
         'typing',
         'upload_photo',
         'record_video',
@@ -23,7 +24,7 @@ class TelegramBotClient extends Client
         'upload_audio',
         'upload_document',
         'find_location',
-    );
+    ];
 
     /**
      * @var string
@@ -33,12 +34,48 @@ class TelegramBotClient extends Client
     /**
      * @var string
      */
-    protected $uri = 'https://api.telegram.org/bot%s/%s';
+    protected $apiUri = 'https://api.telegram.org/bot%s/%s';
 
     /**
      * @var string
      */
     protected $cachedUri;
+
+    /**
+     * @return string
+     */
+    public function getToken()
+    {
+        return $this->token;
+    }
+
+    /**
+     * @param string $token
+     * @return TelegramBotClient
+     */
+    public function setToken($token)
+    {
+        $this->token = $token;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getApiUri()
+    {
+        return $this->apiUri;
+    }
+
+    /**
+     * @param string $apiUri
+     * @return TelegramBotClient
+     */
+    public function setApiUri($apiUri)
+    {
+        $this->apiUri = $apiUri;
+        return $this;
+    }
 
     /**
      * @param string $methodName
@@ -47,7 +84,7 @@ class TelegramBotClient extends Client
     protected function getBotUri($methodName = '')
     {
         if (null === $this->cachedUri) {
-            $this->cachedUri = sprintf($this->uri, $this->token, $methodName);
+            $this->cachedUri = sprintf($this->apiUri, $this->token, $methodName);
         }
         return $this->cachedUri;
     }
@@ -63,6 +100,12 @@ class TelegramBotClient extends Client
             ->$parameterSetter($data);
 
         $response = $this->send();
+        $bodyJson = json_decode($response->getBody(), true);
+        if (empty($bodyJson['ok'])) {
+            throw new Exception\UnsuccessfulRequestException(sprintf('Bad Request: %s', $bodyJson['description']), $bodyJson['error_code']);
+        } else {
+            return $bodyJson['result'];
+        }
     }
 
     public function getUpdates($offset = null, $limit = null, $timeout = null)
@@ -72,7 +115,7 @@ class TelegramBotClient extends Client
 
     public function setWebhook($url = null)
     {
-
+        return $this->sendBotRequest(__FUNCTION__, ['url' => $url]);
     }
 
     /**
