@@ -5,6 +5,17 @@ use Zend\Stdlib\Hydrator\ClassMethods;
 
 class RecursiveTypeHintClassMethods extends ClassMethods
 {
+    /**
+     * @var \Doctrine\Common\Annotations\AnnotationReader
+     */
+    protected $annotationReader;
+
+    public function __construct($underscoreSeparatedKeys = true)
+    {
+        $this->annotationReader = new \Doctrine\Common\Annotations\AnnotationReader;
+        parent::__construct($underscoreSeparatedKeys);
+    }
+
     public function hydrate(array $data, $object)
     {
         if (!is_object($object)) {
@@ -31,10 +42,30 @@ class RecursiveTypeHintClassMethods extends ClassMethods
                 $parameters = $this->hydrationMethodsCache[$propertyFqn]->getParameters();
                 /* @var $parameter \ReflectionParameter */
                 $parameter = current($parameters);
-                if (!$parameter->getClass()) {
+                $reflectionClass = $parameter->getClass();
+                $annotations = $this->annotationReader->getMethodAnnotations($this->hydrationMethodsCache[$propertyFqn]);
+                if (!$annotations && $reflectionClass && $reflectionClass->isInterface()) {
+                    throw new \Exception(':' . __LINE__);
+                }
+
+                $newReflectionClassName = null;
+                foreach ($annotations as $annotation) {
+                    if ($annotation instanceof \TgBotApi\Model\Annotation\InterfaceDiscriminationMapperInterface && $annotation->getParam() === $property) {
+                        $newReflectionClassName = $annotation->getClass($value);
+                        $reflectionClass = new \ReflectionClass($newReflectionClassName);
+                    }
+                    if ($annotation instanceof \TgBotApi\Model\Annotation\ValueFilterInterface) {
+                        $value = $annotation->filter($value);
+                    }
+                }
+
+                if (!$newReflectionClassName && $reflectionClass && $reflectionClass->isInterface()) {
+                    throw new \Exception(':' . __LINE__);
+                }
+
+                if (!$reflectionClass) {
                     $preparedValue = $value;
                 } else {
-                    $reflectionClass = $parameter->getClass();
                     $reflectionClassConstructor = $reflectionClass->getConstructor();
                     $reflectionConstructorParameters = [];
                     if ($reflectionClassConstructor) {
@@ -66,7 +97,6 @@ class RecursiveTypeHintClassMethods extends ClassMethods
                             $preparedValue->setSingleValue($value);
                         } elseif (1 === count($reflectionConstructorParameters)) {
                             $preparedValue = $reflectionClass->newInstance($value);
-
                         } elseif ($reflectionConstructorParameters) {
                             $i = 0;
                             /* @var $reflectionConstructorParameter \ReflectionParameter */
@@ -78,6 +108,7 @@ class RecursiveTypeHintClassMethods extends ClassMethods
                                     throw new \Exception(':' . __LINE__);
                                 }
                             }
+                            $preparedValue = $reflectionClass->newInstance($value);
                         } else {
                             throw new \Exception(':' . __LINE__);
                         }
