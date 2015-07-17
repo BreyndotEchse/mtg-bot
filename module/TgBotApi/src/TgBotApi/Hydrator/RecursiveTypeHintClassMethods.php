@@ -1,21 +1,47 @@
 <?php
 namespace TgBotApi\Hydrator;
 
+use Doctrine\Common\Annotations\AnnotationReader;
+use Doctrine\Common\Annotations\Reader;
+use ReflectionClass;
+use ReflectionMethod;
+use ReflectionParameter;
+use TgBotApi\Model\Annotation\InterfaceDiscriminationMapperInterface;
+use TgBotApi\Model\Annotation\ValueFilterInterface;
+use Zend\Stdlib\Exception;
 use Zend\Stdlib\Hydrator\ClassMethods;
+use Zend\Stdlib\Hydrator\Filter\FilterComposite;
+use Zend\Stdlib\Hydrator\Filter\FilterProviderInterface;
+use Zend\Stdlib\Hydrator\Filter\MethodMatchFilter;
 
 class RecursiveTypeHintClassMethods extends ClassMethods
 {
     /**
-     * @var \Doctrine\Common\Annotations\AnnotationReader
+     * @var AnnotationReader
      */
     protected $annotationReader;
 
-    public function __construct($underscoreSeparatedKeys = true)
+    public function getAnnotationReader()
     {
-        $this->annotationReader = new \Doctrine\Common\Annotations\AnnotationReader;
-        parent::__construct($underscoreSeparatedKeys);
+        if (null === $this->annotationReader) {
+            $this->annotationReader = new AnnotationReader;
+        }
+        return $this->annotationReader;
     }
 
+    public function setAnnotationReader(Reader $annotationReader)
+    {
+        $this->annotationReader = $annotationReader;
+        return $this;
+    }
+
+    /**
+     * @param array $data
+     * @param object $object
+     * @return object
+     * @throws Exception\BadMethodCallException
+     * @throws \Exception
+     */
     public function hydrate(array $data, $object)
     {
         if (!is_object($object)) {
@@ -34,27 +60,27 @@ class RecursiveTypeHintClassMethods extends ClassMethods
                 $setterName = 'set' . ucfirst($this->hydrateName($property, $data));
 
                 $this->hydrationMethodsCache[$propertyFqn] = is_callable(array($object, $setterName))
-                    ? new \ReflectionMethod($objectClass, $setterName)
+                    ? new ReflectionMethod($objectClass, $setterName)
                     : false;
             }
 
             if ($this->hydrationMethodsCache[$propertyFqn]) {
                 $parameters = $this->hydrationMethodsCache[$propertyFqn]->getParameters();
-                /* @var $parameter \ReflectionParameter */
+                /* @var $parameter ReflectionParameter */
                 $parameter = current($parameters);
                 $reflectionClass = $parameter->getClass();
-                $annotations = $this->annotationReader->getMethodAnnotations($this->hydrationMethodsCache[$propertyFqn]);
+                $annotations = $this->getAnnotationReader()->getMethodAnnotations($this->hydrationMethodsCache[$propertyFqn]);
                 if (!$annotations && $reflectionClass && $reflectionClass->isInterface()) {
                     throw new \Exception(':' . __LINE__);
                 }
 
                 $newReflectionClassName = null;
                 foreach ($annotations as $annotation) {
-                    if ($annotation instanceof \TgBotApi\Model\Annotation\InterfaceDiscriminationMapperInterface && $annotation->getParam() === $property) {
+                    if ($annotation instanceof InterfaceDiscriminationMapperInterface && $annotation->getParam() === $property) {
                         $newReflectionClassName = $annotation->getClass($value);
-                        $reflectionClass = new \ReflectionClass($newReflectionClassName);
+                        $reflectionClass = new ReflectionClass($newReflectionClassName);
                     }
-                    if ($annotation instanceof \TgBotApi\Model\Annotation\ValueFilterInterface) {
+                    if ($annotation instanceof ValueFilterInterface) {
                         $value = $annotation->filter($value);
                     }
                 }
@@ -75,7 +101,7 @@ class RecursiveTypeHintClassMethods extends ClassMethods
                     if (is_array($value)) {
                         $constructorParams = [];
                         if ($reflectionConstructorParameters) {
-                            /* @var $reflectionConstructorParameter \ReflectionParameter */
+                            /* @var $reflectionConstructorParameter ReflectionParameter */
                             foreach ($reflectionConstructorParameters as $reflectionConstructorParameter) {
                                 $paramName = $reflectionConstructorParameter->getName();
                                 if (array_key_exists($paramName, $value)) {
@@ -99,7 +125,7 @@ class RecursiveTypeHintClassMethods extends ClassMethods
                             $preparedValue = $reflectionClass->newInstance($value);
                         } elseif ($reflectionConstructorParameters) {
                             $i = 0;
-                            /* @var $reflectionConstructorParameter \ReflectionParameter */
+                            /* @var $reflectionConstructorParameter ReflectionParameter */
                             foreach ($reflectionConstructorParameters as $reflectionConstructorParameter) {
                                 if ($i++ === 0) {
                                     continue;
