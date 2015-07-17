@@ -173,6 +173,8 @@ class Message
     }
 
     /**
+     * @Annotation\DateTimeValueFilter(param="date")
+     *
      * @param DateTime $date
      * @return self
      */
@@ -191,6 +193,8 @@ class Message
     }
 
     /**
+     * @Annotation\UserChatDiscriminationMapper(param="chat")
+     *
      * @param ConversationInterface $chat
      * @return self
      */
@@ -309,7 +313,7 @@ class Message
     }
 
     /**
-     * @return array
+     * @return PhotoSize[]
      */
     public function getPhoto()
     {
@@ -317,7 +321,7 @@ class Message
     }
 
     /**
-     * @param array $photo
+     * @param PhotoSize[] $photo
      * @return self
      */
     public function setPhoto(array $photo)
@@ -453,7 +457,7 @@ class Message
     }
 
     /**
-     * @return array
+     * @return PhotoSize[]
      */
     public function getNewChatPhoto()
     {
@@ -461,7 +465,7 @@ class Message
     }
 
     /**
-     * @param array $newChatPhoto
+     * @param PhotoSize[] $newChatPhoto
      * @return self
      */
     public function setNewChatPhoto(array $newChatPhoto)

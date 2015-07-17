@@ -1,12 +1,12 @@
 <?php
 namespace TgBotApi\Model;
 
-abstract class AbstractFile
+abstract class AbstractFile implements InputFileInterface
 {
     /**
      * @var string
      */
-    protected $fileId;
+    protected $id;
 
     /**
      * @var string
@@ -21,18 +21,18 @@ abstract class AbstractFile
     /**
      * @return string
      */
-    public function getFileId()
+    public function getId()
     {
-        return $this->fileId;
+        return $this->id;
     }
 
     /**
-     * @param string $fileId
+     * @param string $id
      * @return self
      */
-    public function setFileId($fileId)
+    public function setId($id)
     {
-        $this->fileId = $fileId;
+        $this->id = $id;
         return $this;
     }
 
